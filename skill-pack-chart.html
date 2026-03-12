@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing Skill Pack — Architecture</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #111111;
+      --bg2:       #181818;
+      --bg3:       #1f1f1f;
+      --coral:     #D4705A;
+      --coral-dim: #8a3e2e;
+      --gray:      #555555;
+      --gray-lt:   #888888;
+      --white:     #e2e2e2;
+      --border:    #2a2a2a;
+      --green:     #4f9960;
+      --green-dim: #1e3325;
+      --amber:     #b8883a;
+      --amber-dim: #2e2210;
+      --blue:      #4a80b0;
+      --blue-dim:  #192433;
+      --font-px:   'Press Start 2P', monospace;
+      --font-mono: 'Share Tech Mono', monospace;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+
+    /* ── Hero ───────────────────────────────────────── */
+    .hero {
+      display: grid;
+      grid-template-columns: auto 2px 1fr;
+      align-items: center;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 2px solid var(--coral);
+      margin-bottom: 52px;
+    }
+
+    .hero-title {
+      font-family: var(--font-px);
+      font-size: clamp(16px, 2.8vw, 36px);
+      color: var(--coral);
+      line-height: 1.5;
+      text-shadow: 3px 3px 0 var(--coral-dim);
+    }
+
+    .hero-divider {
+      background: var(--coral);
+      height: 120px;
+      width: 2px;
+      flex-shrink: 0;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .hero-subtitle {
+      font-size: 11px;
+      color: var(--gray-lt);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--gray-lt);
+      line-height: 1.8;
+      max-width: 640px;
+    }
+
+    .hero-cmds {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 2;
+    }
+    .hero-cmds code {
+      color: var(--coral);
+      background: #1e1e1e;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-family: var(--font-mono);
+    }
+
+    /* ── Section label ──────────────────────────────── */
+    .section-label {
+      font-size: 10px;
+      color: var(--coral);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .section-label::before { content: '// '; color: var(--gray); }
+
+    /* ── Legend ─────────────────────────────────────── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--gray-lt);
+    }
+    .ld { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+    /* ── Chart wrapper ──────────────────────────────── */
+    .chart-wrap {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 40px 24px;
+      overflow-x: auto;
+    }
+    .chart-wrap .mermaid {
+      display: flex;
+      justify-content: center;
+    }
+    .chart-wrap svg { max-width: 100%; height: auto; }
+
+    /* ── Tool cards ─────────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+    }
+    .card.auto::before  { background: var(--coral); }
+    .card.manual::before { background: var(--amber); }
+
+    .card-num {
+      font-size: 9px;
+      color: var(--gray);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .card-name {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--coral);
+      margin-bottom: 4px;
+    }
+    .card-repo {
+      font-size: 10px;
+      color: var(--gray);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: var(--gray-lt);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .card-cmd {
+      display: inline-block;
+      font-size: 11px;
+      color: #111;
+      background: var(--coral);
+      padding: 3px 10px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+    }
+    .card-cmd.amber {
+      background: var(--amber);
+    }
+    .card-cmd.green {
+      background: var(--green);
+    }
+
+    /* ── How update works ───────────────────────────── */
+    .update-box {
+      margin-top: 48px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--coral);
+      border-radius: 4px;
+      padding: 24px 28px;
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+    .update-box h3 {
+      font-size: 11px;
+      color: var(--coral);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .update-box p {
+      font-size: 12px;
+      color: var(--gray-lt);
+      line-height: 1.8;
+    }
+    .update-box code {
+      color: var(--coral);
+      background: #1e1e1e;
+      padding: 1px 6px;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+    }
+
+    .footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--gray);
+      text-align: center;
+      letter-spacing: 3px;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Hero ──────────────────────────────────────── -->
+  <header class="hero">
+    <div>
+      <div class="hero-title">MARKETING<br>SKILL<br>PACK</div>
+      <div class="hero-subtitle">One Command. Everything Installed.</div>
+    </div>
+
+    <div class="hero-divider"></div>
+
+    <div class="hero-right">
+      <div class="hero-desc">
+        Installs and keeps up-to-date all AI Marketing Hub tools in a single command.
+        Handles fresh installs and updates automatically — just re-run any time.
+      </div>
+      <div class="hero-cmds">
+        macOS / Linux &nbsp;→&nbsp;
+        <code>curl -fsSL …/install.sh | bash</code><br>
+        Windows &nbsp;→&nbsp;
+        <code>irm …/install.ps1 | iex</code>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Chart ─────────────────────────────────────── -->
+  <p class="section-label">install flow &amp; skill architecture</p>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="ld" style="background:#D4705A;"></div>
+      <span>Entry point / Installer</span>
+    </div>
+    <div class="legend-item">
+      <div class="ld" style="background:#2a2a2a; border:2px solid #D4705A;"></div>
+      <span>Auto-installed skill</span>
+    </div>
+    <div class="legend-item">
+      <div class="ld" style="background:#2a2a2a; border:2px solid #b8883a;"></div>
+      <span>Manual step (WP plugin)</span>
+    </div>
+    <div class="legend-item">
+      <div class="ld" style="background:#1e3325; border:2px solid #4f9960;"></div>
+      <span>Output / Slash command</span>
+    </div>
+    <div class="legend-item">
+      <div class="ld" style="background:#1a1a1a; border:2px solid #444;"></div>
+      <span>System / Path</span>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="mermaid">
+%%{init:{
+  "theme":"base",
+  "themeVariables":{
+    "background":"#181818",
+    "primaryColor":"#252525",
+    "primaryTextColor":"#e2e2e2",
+    "primaryBorderColor":"#D4705A",
+    "secondaryColor":"#1f1f1f",
+    "secondaryTextColor":"#888888",
+    "secondaryBorderColor":"#555555",
+    "tertiaryColor":"#1e3325",
+    "tertiaryTextColor":"#4f9960",
+    "tertiaryBorderColor":"#3a6640",
+    "lineColor":"#D4705A",
+    "edgeLabelBackground":"#181818",
+    "clusterBkg":"#161616",
+    "clusterBorder":"#2a2a2a",
+    "titleColor":"#D4705A",
+    "fontFamily":"Share Tech Mono, monospace",
+    "fontSize":"13px"
+  }
+}}%%
+flowchart TD
+
+  classDef root     fill:#D4705A,stroke:#8a3e2e,color:#111111,font-weight:bold,font-size:14px
+  classDef cmd      fill:#1e1e1e,stroke:#D4705A,color:#D4705A,stroke-width:2px,font-size:12px
+  classDef skill    fill:#222222,stroke:#D4705A,color:#cccccc,stroke-width:1.5px,font-size:11px
+  classDef path     fill:#181818,stroke:#444444,color:#777777,font-size:10px
+  classDef output   fill:#1e3325,stroke:#4f9960,color:#7fbb88,font-size:11px
+  classDef manual   fill:#221c10,stroke:#b8883a,color:#c9963f,stroke-width:2px,font-size:11px
+  classDef prereq   fill:#1a1a1a,stroke:#3a3a3a,color:#666666,font-size:10px
+  classDef platform fill:#171e26,stroke:#4a80b0,color:#6898c0,font-size:11px
+
+  %% ── Entry point ────────────────────────────────────────────────────
+  MAIN(["MARKETING SKILL PACK\ngithub.com/AgriciDaniel/marketing-skill-pack"]):::root
+
+  subgraph ENTRY["  HOW TO RUN  "]
+    direction LR
+    MAC["macOS / Linux\ncurl -fsSL …/install.sh | bash"]:::cmd
+    WIN["Windows\nirm …/install.ps1 | iex"]:::platform
+  end
+
+  MAIN --> ENTRY
+
+  %% ── Prerequisites ───────────────────────────────────────────────────
+  PRE["Prerequisites check\ngit 2.x   ·   Node.js 18+   ·   curl"]:::prereq
+
+  ENTRY --> PRE
+
+  %% ── Packs directory ─────────────────────────────────────────────────
+  PACKS["~/.claude/packs/\nPersistent clone storage for all skill repos"]:::path
+
+  PRE --> PACKS
+
+  %% ── 5 Tools ─────────────────────────────────────────────────────────
+  subgraph TOOLS["  5 TOOLS INSTALLED  "]
+    direction LR
+    T1["Claude Code\n+ VS Code Essentials"]:::skill
+    T2["Claude SEO"]:::skill
+    T3["Claude Blog"]:::skill
+    T4["Skill Forge"]:::skill
+    T5["WP MCP Ultimate"]:::manual
+  end
+
+  PACKS --> TOOLS
+
+  %% ── Tool 1: Essentials ──────────────────────────────────────────────
+  T1 --> E1["Claude Code CLI\nnpm install -g"]:::output
+  T1 --> E2["26 VS Code\nExtensions"]:::output
+
+  %% ── Tool 2: Claude SEO ──────────────────────────────────────────────
+  T2 --> S1["~/.claude/packs/claude-seo\ngit clone --depth 1"]:::path
+  S1 --> S2["~/.claude/skills/seo/\n12 sub-skills · 6 subagents"]:::path
+  S2 --> S3["/seo\nSEO audits · schema · sitemap · page analysis"]:::output
+
+  %% ── Tool 3: Claude Blog ─────────────────────────────────────────────
+  T3 --> B1["~/.claude/packs/claude-blog\ngit clone --depth 1"]:::path
+  B1 --> B2["~/.claude/skills/blog/\n12 sub-skills · 4 agents"]:::path
+  B2 --> B3["/blog\nWrite · rewrite · analyze · calendar"]:::output
+
+  %% ── Tool 4: Skill Forge ─────────────────────────────────────────────
+  T4 --> F1["~/.claude/packs/skill-forge\ngit clone --depth 1"]:::path
+  F1 --> F2["~/.claude/skills/skill-forge/\n8 modules · 8 agents"]:::path
+  F2 --> F3["/skill-forge\nPlan · build · review · publish skills"]:::output
+
+  %% ── Tool 5: WP MCP Ultimate ─────────────────────────────────────────
+  T5 --> W1["~/Downloads/wp-mcp-ultimate.zip\ncurl download"]:::manual
+  W1 --> W2["WP Admin → Plugins\n→ Upload Plugin → Activate"]:::manual
+  W2 --> W3["Tools → MCP Ultimate\nGenerate API key · Connect Claude"]:::output
+
+  %% ── Update path ─────────────────────────────────────────────────────
+  subgraph UPDATE["  RE-RUN = AUTO UPDATE  "]
+    direction LR
+    UP1["Detect existing\n~/.claude/packs/ repos"]:::prereq
+    UP2["git pull each repo\n(fast-forward)"]:::prereq
+    UP3["Re-run each\ninstall.sh"]:::prereq
+  end
+
+  PACKS -.->|"re-run same command"| UPDATE
+  UP1 --> UP2 --> UP3
+    </div>
+  </div>
+
+  <!-- ── Tool cards ─────────────────────────────────── -->
+  <div style="margin-top: 56px;">
+    <p class="section-label">tools included</p>
+    <div class="cards-grid">
+
+      <div class="card auto">
+        <div class="card-num">01 / AUTO-INSTALLED</div>
+        <div class="card-name">Claude Code + VS Code Essentials</div>
+        <div class="card-repo">github: claude-code-essentials-vs-code</div>
+        <div class="card-desc">Sets up the full developer environment: installs Claude Code CLI via npm and configures VS Code with 26 curated extensions for AI-assisted development.</div>
+        <span class="card-cmd green">claude CLI</span>&nbsp;
+        <span class="card-cmd green">VS Code x26</span>
+      </div>
+
+      <div class="card auto">
+        <div class="card-num">02 / AUTO-INSTALLED</div>
+        <div class="card-name">Claude SEO</div>
+        <div class="card-repo">github: claude-seo → ~/.claude/skills/seo/</div>
+        <div class="card-desc">Comprehensive SEO analysis with 12 sub-skills and 6 subagents. Covers full site audits, page analysis, schema markup, sitemaps, hreflang, GEO/AEO, competitor pages, and visual SEO.</div>
+        <span class="card-cmd">/seo</span>
+      </div>
+
+      <div class="card auto">
+        <div class="card-num">03 / AUTO-INSTALLED</div>
+        <div class="card-name">Claude Blog</div>
+        <div class="card-repo">github: claude-blog → ~/.claude/skills/blog/</div>
+        <div class="card-desc">AI blog creation and optimization with 12 sub-skills and 4 agents. Writes, rewrites, analyzes, and schedules content — optimized for Google rankings and AI citations (GEO/AEO).</div>
+        <span class="card-cmd">/blog</span>
+      </div>
+
+      <div class="card auto">
+        <div class="card-num">04 / AUTO-INSTALLED</div>
+        <div class="card-name">Skill Forge</div>
+        <div class="card-repo">github: skill-forge → ~/.claude/skills/skill-forge/</div>
+        <div class="card-desc">Meta-skill for building new Claude Code skills. 8 modules: Plan → Build → Review → Evolve → Publish → Convert → Eval → Benchmark. Supports all 4 complexity tiers.</div>
+        <span class="card-cmd">/skill-forge</span>
+      </div>
+
+      <div class="card manual">
+        <div class="card-num">05 / MANUAL INSTALL</div>
+        <div class="card-name">WP MCP Ultimate</div>
+        <div class="card-repo">github: wp-mcp-ultimate → ~/Downloads/</div>
+        <div class="card-desc">WordPress plugin that connects Claude to any WordPress site via Model Context Protocol. 57 WP abilities: content, media, users, plugins, menus, widgets, comments. Supports Cloudways.</div>
+        <span class="card-cmd amber">Upload ZIP → WP Admin</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Update box ─────────────────────────────────── -->
+  <div class="update-box">
+    <div>
+      <h3>Fresh Install</h3>
+      <p>
+        Each skill repo is cloned to <code>~/.claude/packs/&lt;name&gt;/</code>
+        then its <code>install.sh</code> is run to place files in
+        <code>~/.claude/skills/</code>. Restart Claude Code to load all skills.
+      </p>
+    </div>
+    <div>
+      <h3>Re-run = Update</h3>
+      <p>
+        Script detects existing <code>~/.claude/packs/</code> clones and runs
+        <code>git pull</code> on each. Then re-runs <code>install.sh</code>
+        to apply the latest version. Same one-liner every time.
+      </p>
+    </div>
+    <div>
+      <h3>Error Handling</h3>
+      <p>
+        Each tool is installed independently. If one step fails it prints the
+        error and continues — the rest of the pack still installs successfully.
+      </p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    MARKETING SKILL PACK &nbsp;·&nbsp; AI MARKETING HUB &nbsp;·&nbsp;
+    github.com/AgriciDaniel/marketing-skill-pack
+  </footer>
+
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    securityLevel: 'loose',
+    flowchart: {
+      curve: 'basis',
+      padding: 24,
+      nodeSpacing: 50,
+      rankSpacing: 55,
+      htmlLabels: true
+    }
+  });
+</script>
+</body>
+</html>
