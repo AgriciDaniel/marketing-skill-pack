@@ -126,9 +126,8 @@
     .chart-wrap .mermaid { display: block; }
     .chart-wrap svg {
       display: block;
-      width: 100% !important;
-      height: auto !important;
-      min-height: 520px;
+      max-width: 100%;
+      height: auto;
     }
 
     /* ── Tool cards ─────────────────────────────────────── */
@@ -282,94 +281,68 @@
     "primaryColor":"#252525",
     "primaryTextColor":"#e4e4e4",
     "primaryBorderColor":"#D4705A",
-    "secondaryColor":"#202020",
-    "secondaryTextColor":"#999999",
-    "secondaryBorderColor":"#555555",
-    "tertiaryColor":"#1e3325",
-    "tertiaryTextColor":"#7fbb88",
-    "tertiaryBorderColor":"#3a6640",
+    "secondaryColor":"#1e3325",
+    "secondaryTextColor":"#7fbb88",
+    "secondaryBorderColor":"#3a6640",
+    "tertiaryColor":"#231d10",
+    "tertiaryTextColor":"#c9963f",
+    "tertiaryBorderColor":"#b8883a",
     "lineColor":"#D4705A",
     "edgeLabelBackground":"#181818",
     "clusterBkg":"#161616",
-    "clusterBorder":"#333333",
+    "clusterBorder":"#2a2a2a",
     "titleColor":"#D4705A",
     "fontFamily":"Share Tech Mono, monospace",
     "fontSize":"15px"
   },
   "flowchart":{
-    "nodeSpacing":90,
-    "rankSpacing":140,
-    "padding":30,
+    "nodeSpacing":50,
+    "rankSpacing":70,
+    "padding":24,
     "curve":"basis",
-    "useMaxWidth":false
+    "useMaxWidth":true
   }
 }}%%
-flowchart LR
+flowchart TB
 
   classDef root     fill:#D4705A,stroke:#8a3e2e,color:#111111,font-weight:bold,font-size:16px
   classDef cmd      fill:#1e1e1e,stroke:#D4705A,color:#D4705A,stroke-width:2px,font-size:14px
   classDef skill    fill:#242424,stroke:#D4705A,color:#dddddd,stroke-width:2px,font-size:14px
-  classDef pathnode fill:#1a1a1a,stroke:#484848,color:#888888,font-size:13px
+  classDef pathnode fill:#1a1a1a,stroke:#484848,color:#aaaaaa,font-size:13px
   classDef output   fill:#1e3325,stroke:#4f9960,color:#7fbb88,font-size:14px
   classDef manual   fill:#231d10,stroke:#b8883a,color:#c9963f,stroke-width:2px,font-size:14px
-  classDef prereq   fill:#1b1b1b,stroke:#3a3a3a,color:#777777,font-size:13px
+  classDef prereq   fill:#1b1b1b,stroke:#3a3a3a,color:#999999,font-size:13px
   classDef win      fill:#171e26,stroke:#4a80b0,color:#6898c0,font-size:14px
 
-  %% ── Entry — direct nodes, no subgraph (subgraphs break LR positioning) ──
   MAIN(["MARKETING SKILL PACK\ngithub.com/AgriciDaniel/marketing-skill-pack"]):::root
 
-  MAC["macOS / Linux\ncurl -fsSL https://raw.githubusercontent.com/\nAgriciDaniel/marketing-skill-pack/main/install.sh | bash"]:::cmd
-  WIN["Windows — PowerShell\nirm https://raw.githubusercontent.com/\nAgriciDaniel/marketing-skill-pack/main/install.ps1 | iex\nAuto-detects Git Bash · WSL fallback"]:::win
+  MAC["macOS / Linux\ncurl -fsSL .../install.sh | bash"]:::cmd
+  WIN["Windows — PowerShell\nirm .../install.ps1 | iex\nAuto-detects Git Bash · WSL fallback"]:::win
+
+  PRE["Prerequisites check\ngit 2.x  ·  Node.js 18+  ·  curl"]:::prereq
+  PACKS["~/.claude/packs/  —  Persistent clone storage for all skill repos\nFresh install: git clone   ·   Re-run: git pull + reinstall"]:::pathnode
+
+  T1["Claude Code\n+ VS Code Essentials"]:::skill
+  T2["Claude SEO"]:::skill
+  T3["Claude Blog"]:::skill
+  T4["Skill Forge"]:::skill
+  T5["WP MCP\nUltimate"]:::manual
+
+  O1["Claude Code CLI\n26 VS Code extensions\nAI dev environment"]:::output
+  O2["/seo\n12 sub-skills · 6 subagents\naudits · schema · sitemap"]:::output
+  O3["/blog\n12 sub-skills · 4 agents\nwrite · rewrite · analyze"]:::output
+  O4["/skill-forge\n8 modules · 8 agents\nplan · build · review · publish"]:::output
+  O5["~/Downloads/wp-mcp-ultimate.zip\nUpload via WP Admin → Plugins\n57 WordPress abilities"]:::output
 
   MAIN --> MAC & WIN
-
-  %% ── Prerequisites & Storage ─────────────────────────────────────────
-  PRE["Prerequisites check\ngit 2.x  ·  Node.js 18+  ·  curl"]:::prereq
-
-  MAC --> PRE
-  WIN --> PRE
-
-  PACKS["~/.claude/packs/\nPersistent clone storage — all skill repos"]:::pathnode
-
+  MAC & WIN --> PRE
   PRE --> PACKS
-
-  %% ── Update note (plain node, no subgraph — avoids layout drift) ──────
-  UPD["Re-run same command = auto-update\ngit pull each repo · re-run install.sh"]:::prereq
-  PACKS -.->|"update path"| UPD
-
-  %% ── Lane 1 — Essentials ─────────────────────────────────────────────
-  T1["Claude Code\n+ VS Code Essentials"]:::skill
-  PACKS --> T1
-  T1 --> E1["Claude Code CLI\nnpm install -g"]:::output
-  T1 --> E2["26 VS Code Extensions\nAI dev environment"]:::output
-
-  %% ── Lane 2 — Claude SEO ─────────────────────────────────────────────
-  T2["Claude SEO"]:::skill
-  PACKS --> T2
-  T2 --> S1["~/.claude/packs/claude-seo/\ngit clone --depth 1"]:::pathnode
-  S1 --> S2["~/.claude/skills/seo/\n12 sub-skills · 6 subagents"]:::pathnode
-  S2 --> S3["/seo\naudits · schema · sitemap · page analysis"]:::output
-
-  %% ── Lane 3 — Claude Blog ────────────────────────────────────────────
-  T3["Claude Blog"]:::skill
-  PACKS --> T3
-  T3 --> B1["~/.claude/packs/claude-blog/\ngit clone --depth 1"]:::pathnode
-  B1 --> B2["~/.claude/skills/blog/\n12 sub-skills · 4 agents"]:::pathnode
-  B2 --> B3["/blog\nwrite · rewrite · analyze · calendar"]:::output
-
-  %% ── Lane 4 — Skill Forge ────────────────────────────────────────────
-  T4["Skill Forge"]:::skill
-  PACKS --> T4
-  T4 --> F1["~/.claude/packs/skill-forge/\ngit clone --depth 1"]:::pathnode
-  F1 --> F2["~/.claude/skills/skill-forge/\n8 modules · 8 agents"]:::pathnode
-  F2 --> F3["/skill-forge\nplan · build · review · publish"]:::output
-
-  %% ── Lane 5 — WP MCP Ultimate ────────────────────────────────────────
-  T5["WP MCP Ultimate"]:::manual
-  PACKS --> T5
-  T5 --> W1["~/Downloads/wp-mcp-ultimate.zip\ncurl download"]:::manual
-  W1 --> W2["WP Admin → Plugins\n→ Upload Plugin → Activate"]:::manual
-  W2 --> W3["Tools → MCP Ultimate\nAPI key · 57 WordPress abilities"]:::output
+  PACKS --> T1 & T2 & T3 & T4 & T5
+  T1 --> O1
+  T2 --> O2
+  T3 --> O3
+  T4 --> O4
+  T5 --> O5
     </div>
   </div>
 
@@ -578,45 +551,10 @@ flowchart LR
 </div>
 
 <script>
-  mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
-
-  // After Mermaid renders: crop the SVG viewBox to the actual content bounds
-  // so the chart fills its container with no dead empty space.
-  function cropMermaidSVGs() {
-    document.querySelectorAll('.mermaid svg').forEach(svg => {
-      // Remove hardcoded dimensions Mermaid injects
-      svg.removeAttribute('width');
-      svg.removeAttribute('height');
-      svg.style.width  = '100%';
-      svg.style.height = 'auto';
-      svg.style.display = 'block';
-
-      // getBBox() returns the tight bounding box of all rendered content
-      // in SVG coordinate space — this eliminates the empty margins.
-      try {
-        const rootG = svg.querySelector(':scope > g');
-        if (!rootG) return;
-        const bb  = rootG.getBBox();
-        const pad = 32; // small breathing room around the content
-        svg.setAttribute('viewBox',
-          `${bb.x - pad} ${bb.y - pad} ${bb.width + pad * 2} ${bb.height + pad * 2}`
-        );
-      } catch (e) {
-        // getBBox can fail on hidden elements — safe to ignore
-      }
-    });
-  }
-
-  // Mermaid v10 fires a custom event when each diagram is done
-  document.addEventListener('DOMContentLoaded', () => {
-    // Primary: observe the .mermaid divs for SVG insertion
-    const observer = new MutationObserver(cropMermaidSVGs);
-    document.querySelectorAll('.mermaid').forEach(el =>
-      observer.observe(el, { childList: true, subtree: false })
-    );
-    // Fallback: run after a short delay in case mutation fires before paint
-    setTimeout(cropMermaidSVGs, 600);
-    setTimeout(cropMermaidSVGs, 1400);
+  mermaid.initialize({
+    startOnLoad: true,
+    securityLevel: 'loose',
+    theme: 'base'
   });
 </script>
 </body>
