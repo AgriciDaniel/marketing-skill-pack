@@ -1,5 +1,7 @@
 # AI Marketing Hub — Marketing Skill Pack
 
+![Marketing Skill Pack](cover.jpeg)
+
 Install all AI Marketing Hub tools in one command. Works on macOS, Linux, and Windows.
 
 ---
