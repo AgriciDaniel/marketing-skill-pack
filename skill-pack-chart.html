@@ -42,44 +42,129 @@
     }
     .pdf-page + .pdf-page { margin-top: 0; }
 
-    /* ── Hero ──────────────────────────────────────── */
+    /* ── Hero banner ────────────────────────────────── */
     .hero {
+      background: #0d0d0d;
+      border: 1px solid #2e2e2e;
+      border-top: 4px solid var(--coral);
+      border-radius: 8px;
+      padding: 40px 52px 44px;
       display: grid;
-      grid-template-columns: auto 2px 1fr;
+      grid-template-columns: 1fr 2px 1.35fr;
+      gap: 52px;
       align-items: center;
-      gap: 44px;
-      padding-bottom: 38px;
-      border-bottom: 2px solid var(--coral);
-      margin-bottom: 44px;
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
     }
+    /* subtle corner decoration */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border: 2px solid #2a2a2a;
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+
+    .hero-left { display: flex; flex-direction: column; gap: 0; }
+
+    .hero-eyebrow {
+      font-size: 9px;
+      color: var(--gray);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow::before { content: '// '; color: var(--coral-dim); }
+
     .hero-title {
       font-family: var(--font-px);
-      font-size: clamp(15px, 2.5vw, 34px);
+      font-size: 46px;
       color: var(--coral);
-      line-height: 1.65;
-      text-shadow: 3px 3px 0 var(--coral-dim);
+      line-height: 1.55;
+      text-shadow: 5px 5px 0 var(--coral-dim);
+      margin-bottom: 20px;
     }
-    .hero-divider { background: var(--coral); width: 2px; height: 120px; }
-    .hero-right { display: flex; flex-direction: column; gap: 14px; }
-    .hero-subtitle {
+
+    .hero-tagline {
       font-size: 10px;
       color: var(--gray-lt);
-      letter-spacing: 4px;
+      letter-spacing: 5px;
       text-transform: uppercase;
+      margin-bottom: 24px;
     }
-    .hero-desc {
-      font-size: 14px;
-      color: var(--gray-lt);
-      line-height: 1.9;
-      max-width: 680px;
+
+    /* stat badges row */
+    .hero-stats {
+      display: flex;
+      gap: 12px;
     }
-    .hero-cmds { font-size: 13px; color: var(--gray); line-height: 2.5; }
-    .hero-cmds code {
+    .stat {
+      background: #161616;
+      border: 1px solid #333;
+      border-bottom: 2px solid var(--coral);
+      border-radius: 4px;
+      padding: 10px 18px;
+      text-align: center;
+      min-width: 80px;
+    }
+    .stat-num {
+      display: block;
+      font-size: 26px;
       color: var(--coral);
-      background: #1d1d1d;
-      padding: 3px 10px;
-      border-radius: 3px;
+      font-weight: bold;
+      line-height: 1;
     }
+    .stat-label {
+      display: block;
+      font-size: 9px;
+      color: var(--gray-lt);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 5px;
+    }
+
+    .hero-divider { background: var(--coral); width: 2px; align-self: stretch; opacity: 0.5; }
+
+    .hero-right { display: flex; flex-direction: column; gap: 20px; }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--gray-lt);
+      line-height: 1.95;
+    }
+
+    /* install command blocks */
+    .hero-cmd-block { display: flex; flex-direction: column; gap: 10px; }
+    .cmd-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-left: 3px solid var(--coral);
+      border-radius: 4px;
+      padding: 12px 16px;
+    }
+    .cmd-row.win { border-left-color: var(--blue); }
+    .cmd-platform {
+      font-size: 10px;
+      color: var(--gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      min-width: 100px;
+      flex-shrink: 0;
+    }
+    .cmd-row.win .cmd-platform { color: #4a6e8a; }
+    .cmd-code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--coral);
+      word-break: break-all;
+    }
+    .cmd-row.win .cmd-code { color: #6898c0; }
 
     /* ── Section label ──────────────────────────────── */
     .section-label {
@@ -269,23 +354,54 @@
 <div class="pdf-page">
 
   <header class="hero">
-    <div>
+
+    <!-- LEFT: big title + stats -->
+    <div class="hero-left">
+      <div class="hero-eyebrow">AI Marketing Hub — Skills Pack</div>
       <div class="hero-title">MARKETING<br>SKILL<br>PACK</div>
-      <div class="hero-subtitle">One Command. Everything Installed.</div>
+      <div class="hero-tagline">One command. Everything installed.</div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">5</span>
+          <span class="stat-label">Tools</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">1</span>
+          <span class="stat-label">Command</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Platforms</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">0</span>
+          <span class="stat-label">Config needed</span>
+        </div>
+      </div>
     </div>
+
     <div class="hero-divider"></div>
+
+    <!-- RIGHT: description + install commands -->
     <div class="hero-right">
       <div class="hero-desc">
         Installs and keeps all AI Marketing Hub tools up-to-date in a single command.
-        Handles fresh installs and auto-updates — just re-run any time.
+        Handles fresh installs and auto-updates — just re-run any time. Each skill clones
+        to <code style="color:var(--coral);background:#1a1a1a;padding:1px 6px;border-radius:2px;">~/.claude/packs/</code>
+        and copies into <code style="color:var(--coral);background:#1a1a1a;padding:1px 6px;border-radius:2px;">~/.claude/skills/</code>.
       </div>
-      <div class="hero-cmds">
-        macOS &amp; Linux &nbsp;→&nbsp;
-        <code>curl -fsSL https://raw.githubusercontent.com/AgriciDaniel/marketing-skill-pack/main/install.sh | bash</code><br>
-        Windows &nbsp;→&nbsp;
-        <code>irm https://raw.githubusercontent.com/AgriciDaniel/marketing-skill-pack/main/install.ps1 | iex</code>
+      <div class="hero-cmd-block">
+        <div class="cmd-row">
+          <span class="cmd-platform">macOS / Linux</span>
+          <span class="cmd-code">curl -fsSL https://raw.githubusercontent.com/AgriciDaniel/marketing-skill-pack/main/install.sh | bash</span>
+        </div>
+        <div class="cmd-row win">
+          <span class="cmd-platform">Windows PS</span>
+          <span class="cmd-code">irm https://raw.githubusercontent.com/AgriciDaniel/marketing-skill-pack/main/install.ps1 | iex</span>
+        </div>
       </div>
     </div>
+
   </header>
 
   <p class="section-label">install flow &amp; skill architecture</p>
