@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marketing Skill Pack — Architecture</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -17,7 +15,6 @@
     :root {
       --bg:        #111111;
       --bg2:       #181818;
-      --bg3:       #1f1f1f;
       --coral:     #D4705A;
       --coral-dim: #8a3e2e;
       --gray:      #555555;
@@ -27,122 +24,149 @@
       --green:     #4f9960;
       --amber:     #b8883a;
       --blue:      #4a80b0;
-      --font-px:   'Press Start 2P', monospace;
-      --font-mono: 'Share Tech Mono', monospace;
+      --font-px:   'Press Start 2P', 'Courier New', monospace;
+      --font-mono: 'Share Tech Mono', 'Courier New', monospace;
     }
 
     html, body {
       background: var(--bg);
       color: var(--white);
       font-family: var(--font-mono);
-      min-height: 100vh;
     }
 
-    /* ── Page ───────────────────────────────────────────── */
-    .page {
-      max-width: 1600px;
+    /* ── Page sections ──────────────────────────────── */
+    .pdf-page {
+      max-width: 1440px;
       margin: 0 auto;
-      padding: 52px 48px 96px;
+      padding: 48px 56px 60px;
     }
+    .pdf-page + .pdf-page { margin-top: 0; }
 
-    /* ── Hero ───────────────────────────────────────────── */
+    /* ── Hero ──────────────────────────────────────── */
     .hero {
       display: grid;
       grid-template-columns: auto 2px 1fr;
       align-items: center;
-      gap: 48px;
-      padding-bottom: 44px;
+      gap: 44px;
+      padding-bottom: 38px;
       border-bottom: 2px solid var(--coral);
-      margin-bottom: 56px;
+      margin-bottom: 44px;
     }
-
     .hero-title {
       font-family: var(--font-px);
-      font-size: clamp(18px, 3vw, 40px);
+      font-size: clamp(15px, 2.5vw, 34px);
       color: var(--coral);
-      line-height: 1.5;
-      text-shadow: 4px 4px 0 var(--coral-dim);
+      line-height: 1.65;
+      text-shadow: 3px 3px 0 var(--coral-dim);
     }
-
-    .hero-divider { background: var(--coral); width: 2px; height: 130px; }
-
-    .hero-right { display: flex; flex-direction: column; gap: 18px; }
-
+    .hero-divider { background: var(--coral); width: 2px; height: 120px; }
+    .hero-right { display: flex; flex-direction: column; gap: 14px; }
     .hero-subtitle {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--gray-lt);
       letter-spacing: 4px;
       text-transform: uppercase;
-      margin-top: 10px;
     }
-
     .hero-desc {
-      font-size: 15px;
+      font-size: 14px;
       color: var(--gray-lt);
       line-height: 1.9;
       max-width: 680px;
     }
-
-    .hero-cmds { font-size: 14px; color: var(--gray); line-height: 2.4; }
+    .hero-cmds { font-size: 13px; color: var(--gray); line-height: 2.5; }
     .hero-cmds code {
       color: var(--coral);
       background: #1d1d1d;
       padding: 3px 10px;
       border-radius: 3px;
-      font-family: var(--font-mono);
     }
 
-    /* ── Section label ──────────────────────────────────── */
+    /* ── Section label ──────────────────────────────── */
     .section-label {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--coral);
       letter-spacing: 5px;
       text-transform: uppercase;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
     .section-label::before { content: '// '; color: var(--gray); }
 
-    /* ── Legend ─────────────────────────────────────────── */
+    /* ── Legend ─────────────────────────────────────── */
     .legend {
       display: flex;
       flex-wrap: wrap;
-      gap: 24px;
-      margin-bottom: 28px;
+      gap: 18px;
+      margin-bottom: 20px;
     }
-    .legend-item { display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--gray-lt); }
-    .ld { width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--gray-lt); }
+    .ld { width: 13px; height: 13px; border-radius: 2px; flex-shrink: 0; }
 
-    /* ── Chart container ────────────────────────────────── */
+    /* ── SVG chart wrapper ──────────────────────────── */
     .chart-wrap {
       background: var(--bg2);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 48px 40px;
+      padding: 28px 20px;
       overflow-x: auto;
-      /* Let the chart breathe — no forced max width on SVG */
     }
-
-    /* Make Mermaid SVG render at full natural size */
-    .chart-wrap .mermaid { display: block; }
     .chart-wrap svg {
       display: block;
       max-width: 100%;
       height: auto;
     }
 
-    /* ── Tool cards ─────────────────────────────────────── */
+    /* ── Slash command map ──────────────────────────── */
+    .cmd-map {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .cmd-col { background: var(--bg2); padding: 26px 22px 30px; }
+    .cmd-col-header {
+      font-size: 20px;
+      color: var(--coral);
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--coral);
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+    .cmd-col-header span {
+      display: block;
+      font-size: 10px;
+      color: var(--gray-lt);
+      letter-spacing: 2px;
+      margin-top: 5px;
+      text-transform: uppercase;
+    }
+    .cmd-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid #1e1e1e;
+      font-size: 12px;
+    }
+    .cmd-item:last-child { border-bottom: none; }
+    .cmd-key { color: var(--coral); font-weight: bold; min-width: 90px; flex-shrink: 0; }
+    .cmd-desc { color: var(--gray-lt); line-height: 1.5; }
+    .cmd-col.manual .cmd-col-header { color: var(--amber); border-color: var(--amber); }
+    .cmd-col.manual .cmd-key { color: var(--amber); }
+
+    /* ── Tool cards ─────────────────────────────────── */
     .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 18px;
-      margin-top: 20px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
     }
-
     .card {
       background: var(--bg2);
       border: 1px solid var(--border);
       border-radius: 5px;
-      padding: 24px 22px;
+      padding: 20px 16px;
       position: relative;
       overflow: hidden;
     }
@@ -152,62 +176,58 @@
       top: 0; left: 0;
       width: 3px; height: 100%;
     }
-    .card.auto::before   { background: var(--coral); }
-    .card.manual::before { background: var(--amber); }
-
-    .card-num  { font-size: 9px; color: var(--gray); letter-spacing: 2px; margin-bottom: 9px; }
-    .card-name { font-size: 15px; color: var(--coral); margin-bottom: 5px; }
-    .card-repo { font-size: 11px; color: var(--gray); margin-bottom: 14px; letter-spacing: 1px; }
-    .card-desc { font-size: 13px; color: var(--gray-lt); line-height: 1.75; margin-bottom: 14px; }
-
+    .card.auto::before  { background: var(--coral); }
+    .card.manual::before{ background: var(--amber); }
+    .card-num  { font-size: 9px; color: var(--gray); letter-spacing: 2px; margin-bottom: 7px; }
+    .card-name { font-size: 13px; color: var(--coral); margin-bottom: 3px; }
+    .card-repo { font-size: 10px; color: var(--gray); margin-bottom: 10px; }
+    .card-desc { font-size: 11px; color: var(--gray-lt); line-height: 1.7; margin-bottom: 10px; }
     .badge {
       display: inline-block;
-      font-size: 11px;
+      font-size: 10px;
       color: #111;
-      padding: 4px 12px;
+      padding: 3px 9px;
       border-radius: 2px;
       letter-spacing: 1px;
-      margin-right: 6px;
-      margin-bottom: 4px;
+      margin-right: 4px;
+      margin-bottom: 3px;
     }
-    .badge.coral  { background: var(--coral); }
-    .badge.green  { background: var(--green); }
-    .badge.amber  { background: var(--amber); }
+    .badge.coral { background: var(--coral); }
+    .badge.green { background: var(--green); color: #fff; }
+    .badge.amber { background: var(--amber); }
 
-    /* ── Info box ───────────────────────────────────────── */
+    /* ── Info boxes ─────────────────────────────────── */
     .info-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
     }
     .info-box {
       background: var(--bg2);
       border: 1px solid var(--border);
       border-left: 3px solid var(--coral);
       border-radius: 4px;
-      padding: 22px 24px;
+      padding: 18px 18px;
     }
     .info-box h3 {
-      font-size: 10px;
+      font-size: 9px;
       color: var(--coral);
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 9px;
     }
-    .info-box p { font-size: 13px; color: var(--gray-lt); line-height: 1.85; }
+    .info-box p { font-size: 11px; color: var(--gray-lt); line-height: 1.85; }
     .info-box code {
       color: var(--coral);
       background: #1d1d1d;
-      padding: 1px 6px;
+      padding: 1px 5px;
       border-radius: 2px;
-      font-family: var(--font-mono);
     }
 
-    /* ── Footer ─────────────────────────────────────────── */
+    /* ── Footer ─────────────────────────────────────── */
     .footer {
-      margin-top: 72px;
-      padding-top: 28px;
+      margin-top: 44px;
+      padding-top: 22px;
       border-top: 1px solid var(--border);
       font-size: 10px;
       color: var(--gray);
@@ -215,418 +235,531 @@
       letter-spacing: 3px;
     }
 
-    /* ── Save as PDF button ──────────────────────────────── */
-    .pdf-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-      background: var(--coral);
-      color: #111111;
-      border: none;
-      padding: 11px 22px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: bold;
-      letter-spacing: 2px;
-      cursor: pointer;
-      border-radius: 4px;
-      text-transform: uppercase;
-      box-shadow: 0 4px 16px rgba(212,112,90,0.35);
-      transition: background 0.15s;
-    }
-    .pdf-btn:hover { background: #e07d65; }
-
-    /* ── PDF / Print ─────────────────────────────────────── */
-    @page {
-      size: A3 landscape;
-      margin: 14mm 16mm;
-    }
+    /* ── PDF / Print ─────────────────────────────────── */
+    @page { size: A3 landscape; margin: 10mm 12mm; }
 
     @media print {
-      /* Hide the button in the PDF */
-      .pdf-btn { display: none !important; }
-
-      /* Preserve dark theme colours */
       html, body {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
         background: #111111;
       }
-
-      .page {
-        max-width: 100%;
-        padding: 0;
+      .pdf-page { padding: 0; }
+      .pdf-page + .pdf-page {
+        page-break-before: always;
+        break-before: page;
       }
-
-      /* Never split a chart across pages */
       .chart-wrap {
         break-inside: avoid;
         page-break-inside: avoid;
         overflow: visible;
       }
-
-      /* Keep section headers with their content */
+      .cards-grid, .info-grid { break-inside: avoid; }
+      .card, .info-box { break-inside: avoid; }
       .section-label { break-after: avoid; page-break-after: avoid; }
-
-      /* Keep legend attached to chart */
       .legend { break-after: avoid; page-break-after: avoid; }
-
-      /* New page before each major section (charts + cards + info) */
-      .chart-section-break {
-        break-before: page;
-        page-break-before: always;
-      }
-
-      /* Keep individual cards intact */
-      .card {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      /* Keep info boxes intact */
-      .info-box {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      /* Keep the card grid together */
-      .cards-grid {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      /* Keep info grid together */
-      .info-grid {
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
     }
   </style>
 </head>
 <body>
-<button class="pdf-btn" onclick="window.print()">&#8595; Save as PDF</button>
-<div class="page">
 
-  <!-- ── Hero ──────────────────────────────────────────── -->
+<!-- ═══════════════════════════════════════════════
+     PAGE 1 — Hero + Install Flow Diagram
+════════════════════════════════════════════════ -->
+<div class="pdf-page">
+
   <header class="hero">
     <div>
       <div class="hero-title">MARKETING<br>SKILL<br>PACK</div>
       <div class="hero-subtitle">One Command. Everything Installed.</div>
     </div>
-
     <div class="hero-divider"></div>
-
     <div class="hero-right">
       <div class="hero-desc">
         Installs and keeps all AI Marketing Hub tools up-to-date in a single command.
         Handles fresh installs and auto-updates — just re-run any time.
       </div>
       <div class="hero-cmds">
-        macOS &amp; Linux &nbsp;→&nbsp; <code>curl -fsSL …/install.sh | bash</code><br>
-        Windows &nbsp;→&nbsp; <code>irm …/install.ps1 | iex</code>
+        macOS &amp; Linux &nbsp;→&nbsp;
+        <code>curl -fsSL https://raw.githubusercontent.com/AgriciDaniel/marketing-skill-pack/main/install.sh | bash</code><br>
+        Windows &nbsp;→&nbsp;
+        <code>irm https://raw.githubusercontent.com/AgriciDaniel/marketing-skill-pack/main/install.ps1 | iex</code>
       </div>
     </div>
   </header>
 
-  <!-- ══════════════════════════════════════════════════════
-       CHART 1 — Install Flow
-  ═══════════════════════════════════════════════════════ -->
   <p class="section-label">install flow &amp; skill architecture</p>
 
   <div class="legend">
-    <div class="legend-item">
-      <div class="ld" style="background:#D4705A;"></div>
-      <span>Entry point / Installer</span>
-    </div>
-    <div class="legend-item">
-      <div class="ld" style="background:#252525;border:2px solid #D4705A;"></div>
-      <span>Auto-installed skill</span>
-    </div>
-    <div class="legend-item">
-      <div class="ld" style="background:#252525;border:2px solid #b8883a;"></div>
-      <span>Manual step — WP plugin</span>
-    </div>
-    <div class="legend-item">
-      <div class="ld" style="background:#1e3325;border:2px solid #4f9960;"></div>
-      <span>Output / Slash command</span>
-    </div>
-    <div class="legend-item">
-      <div class="ld" style="background:#1a1a1a;border:2px solid #444;"></div>
-      <span>System path / Storage</span>
-    </div>
-    <div class="legend-item">
-      <div class="ld" style="background:#171e26;border:2px solid #4a80b0;"></div>
-      <span>Windows installer</span>
-    </div>
+    <div class="legend-item"><div class="ld" style="background:#D4705A;"></div><span>Entry point / Installer</span></div>
+    <div class="legend-item"><div class="ld" style="background:#252525;border:2px solid #D4705A;"></div><span>Auto-installed skill</span></div>
+    <div class="legend-item"><div class="ld" style="background:#252525;border:2px solid #b8883a;"></div><span>Manual step — WP plugin</span></div>
+    <div class="legend-item"><div class="ld" style="background:#1e3325;border:2px solid #4f9960;"></div><span>Output / Slash command</span></div>
+    <div class="legend-item"><div class="ld" style="background:#1a1a1a;border:2px solid #444;"></div><span>System path / Storage</span></div>
+    <div class="legend-item"><div class="ld" style="background:#171e26;border:2px solid #4a80b0;"></div><span>Windows installer</span></div>
   </div>
 
   <div class="chart-wrap">
-    <div class="mermaid">
-%%{init:{
-  "theme":"base",
-  "themeVariables":{
-    "background":"#181818",
-    "primaryColor":"#252525",
-    "primaryTextColor":"#e4e4e4",
-    "primaryBorderColor":"#D4705A",
-    "secondaryColor":"#1e3325",
-    "secondaryTextColor":"#7fbb88",
-    "secondaryBorderColor":"#3a6640",
-    "tertiaryColor":"#231d10",
-    "tertiaryTextColor":"#c9963f",
-    "tertiaryBorderColor":"#b8883a",
-    "lineColor":"#D4705A",
-    "edgeLabelBackground":"#181818",
-    "clusterBkg":"#161616",
-    "clusterBorder":"#2a2a2a",
-    "titleColor":"#D4705A",
-    "fontFamily":"Share Tech Mono, monospace",
-    "fontSize":"15px"
-  },
-  "flowchart":{
-    "nodeSpacing":50,
-    "rankSpacing":70,
-    "padding":24,
-    "curve":"basis",
-    "useMaxWidth":true
-  }
-}}%%
-flowchart TB
+    <!--
+      SVG Install Flow — pure hand-crafted SVG, no JavaScript dependency.
+      ViewBox 1280 × 668. All coordinates are explicit.
+      Tool centers: T1=192 T2=416 T3=640 T4=864 T5=1088
+    -->
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 1280 668"
+         width="1280" height="668"
+         font-family="'Share Tech Mono','Courier New',monospace">
+      <defs>
+        <!-- Coral arrowhead -->
+        <marker id="arr"  markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#D4705A"/>
+        </marker>
+        <!-- Amber arrowhead -->
+        <marker id="arrA" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#b8883a"/>
+        </marker>
+        <!-- Green arrowhead -->
+        <marker id="arrG" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+          <polygon points="0 0, 9 3.5, 0 7" fill="#4f9960"/>
+        </marker>
+      </defs>
 
-  classDef root     fill:#D4705A,stroke:#8a3e2e,color:#111111,font-weight:bold,font-size:16px
-  classDef cmd      fill:#1e1e1e,stroke:#D4705A,color:#D4705A,stroke-width:2px,font-size:14px
-  classDef skill    fill:#242424,stroke:#D4705A,color:#dddddd,stroke-width:2px,font-size:14px
-  classDef pathnode fill:#1a1a1a,stroke:#484848,color:#aaaaaa,font-size:13px
-  classDef output   fill:#1e3325,stroke:#4f9960,color:#7fbb88,font-size:14px
-  classDef manual   fill:#231d10,stroke:#b8883a,color:#c9963f,stroke-width:2px,font-size:14px
-  classDef prereq   fill:#1b1b1b,stroke:#3a3a3a,color:#999999,font-size:13px
-  classDef win      fill:#171e26,stroke:#4a80b0,color:#6898c0,font-size:14px
+      <!-- ═══════════════════════════════════════
+           ROW 1 — MAIN node  (y=10, h=62)
+      ═══════════════════════════════════════ -->
+      <rect x="440" y="10" width="400" height="62" rx="6"
+            fill="#D4705A" stroke="#8a3e2e" stroke-width="1.5"/>
+      <text x="640" y="33" text-anchor="middle" fill="#111111"
+            font-size="14" font-weight="bold" letter-spacing="1">MARKETING SKILL PACK</text>
+      <text x="640" y="54" text-anchor="middle" fill="#111111"
+            font-size="11">github.com/AgriciDaniel/marketing-skill-pack</text>
 
-  MAIN(["MARKETING SKILL PACK\ngithub.com/AgriciDaniel/marketing-skill-pack"]):::root
+      <!-- MAIN → fork bar -->
+      <line x1="640" y1="72" x2="640" y2="108"
+            stroke="#D4705A" stroke-width="2"/>
+      <line x1="300" y1="108" x2="980" y2="108"
+            stroke="#D4705A" stroke-width="2"/>
+      <!-- fork → MAC -->
+      <line x1="300" y1="108" x2="300" y2="146"
+            stroke="#D4705A" stroke-width="2" marker-end="url(#arr)"/>
+      <!-- fork → WIN -->
+      <line x1="980" y1="108" x2="980" y2="146"
+            stroke="#4a80b0" stroke-width="2" marker-end="url(#arrA)"/>
 
-  MAC["macOS / Linux\ncurl -fsSL .../install.sh | bash"]:::cmd
-  WIN["Windows — PowerShell\nirm .../install.ps1 | iex\nAuto-detects Git Bash · WSL fallback"]:::win
+      <!-- ═══════════════════════════════════════
+           ROW 2 — MAC + WIN  (y=146, h=70)
+      ═══════════════════════════════════════ -->
+      <!-- MAC -->
+      <rect x="80" y="146" width="440" height="70" rx="5"
+            fill="#1e1e1e" stroke="#D4705A" stroke-width="1.5"/>
+      <text x="300" y="171" text-anchor="middle" fill="#D4705A"
+            font-size="12" font-weight="bold">macOS / Linux</text>
+      <text x="300" y="191" text-anchor="middle" fill="#888888"
+            font-size="10">curl -fsSL .../install.sh | bash</text>
 
-  PRE["Prerequisites check\ngit 2.x  ·  Node.js 18+  ·  curl"]:::prereq
-  PACKS["~/.claude/packs/  —  Persistent clone storage for all skill repos\nFresh install: git clone   ·   Re-run: git pull + reinstall"]:::pathnode
+      <!-- WIN -->
+      <rect x="760" y="146" width="440" height="70" rx="5"
+            fill="#171e26" stroke="#4a80b0" stroke-width="1.5"/>
+      <text x="980" y="171" text-anchor="middle" fill="#6898c0"
+            font-size="12" font-weight="bold">Windows — PowerShell</text>
+      <text x="980" y="191" text-anchor="middle" fill="#4a6e8a"
+            font-size="10">irm .../install.ps1 | iex  ·  Git Bash / WSL auto-detect</text>
 
-  T1["Claude Code\n+ VS Code Essentials"]:::skill
-  T2["Claude SEO"]:::skill
-  T3["Claude Blog"]:::skill
-  T4["Skill Forge"]:::skill
-  T5["WP MCP\nUltimate"]:::manual
+      <!-- MAC + WIN → merge bar → PRE -->
+      <line x1="300" y1="216" x2="300" y2="250"
+            stroke="#D4705A" stroke-width="2"/>
+      <line x1="980" y1="216" x2="980" y2="250"
+            stroke="#D4705A" stroke-width="2"/>
+      <line x1="300" y1="250" x2="980" y2="250"
+            stroke="#D4705A" stroke-width="2"/>
+      <line x1="640" y1="250" x2="640" y2="272"
+            stroke="#D4705A" stroke-width="2" marker-end="url(#arr)"/>
 
-  O1["Claude Code CLI\n26 VS Code extensions\nAI dev environment"]:::output
-  O2["/seo\n12 sub-skills · 6 subagents\naudits · schema · sitemap"]:::output
-  O3["/blog\n12 sub-skills · 4 agents\nwrite · rewrite · analyze"]:::output
-  O4["/skill-forge\n8 modules · 8 agents\nplan · build · review · publish"]:::output
-  O5["~/Downloads/wp-mcp-ultimate.zip\nUpload via WP Admin → Plugins\n57 WordPress abilities"]:::output
+      <!-- ═══════════════════════════════════════
+           ROW 3 — PREREQUISITES  (y=272, h=60)
+      ═══════════════════════════════════════ -->
+      <rect x="420" y="272" width="440" height="60" rx="5"
+            fill="#1b1b1b" stroke="#444444" stroke-width="1.5"/>
+      <text x="640" y="296" text-anchor="middle" fill="#999999"
+            font-size="12" font-weight="bold">Prerequisites check</text>
+      <text x="640" y="316" text-anchor="middle" fill="#666666"
+            font-size="11">git 2.x  ·  Node.js 18+  ·  curl</text>
 
-  MAIN --> MAC & WIN
-  MAC & WIN --> PRE
-  PRE --> PACKS
-  PACKS --> T1 & T2 & T3 & T4 & T5
-  T1 --> O1
-  T2 --> O2
-  T3 --> O3
-  T4 --> O4
-  T5 --> O5
-    </div>
+      <!-- PRE → PACKS -->
+      <line x1="640" y1="332" x2="640" y2="356"
+            stroke="#D4705A" stroke-width="2" marker-end="url(#arr)"/>
+
+      <!-- ═══════════════════════════════════════
+           ROW 4 — PACKS storage  (y=356, h=66)
+      ═══════════════════════════════════════ -->
+      <rect x="270" y="356" width="740" height="66" rx="5"
+            fill="#1a1a1a" stroke="#484848" stroke-width="1.5"/>
+      <text x="640" y="380" text-anchor="middle" fill="#aaaaaa"
+            font-size="12" font-weight="bold">~/.claude/packs/  —  Persistent Clone Storage</text>
+      <text x="640" y="402" text-anchor="middle" fill="#666666"
+            font-size="11">Fresh install: git clone  ·  Re-run same command: git pull + reinstall</text>
+
+      <!-- PACKS → fan bar → 5 tool drops -->
+      <line x1="640" y1="422" x2="640" y2="452"
+            stroke="#D4705A" stroke-width="2"/>
+      <!-- horizontal fan bar -->
+      <line x1="192" y1="452" x2="1088" y2="452"
+            stroke="#D4705A" stroke-width="2"/>
+      <!-- drop to T1 -->
+      <line x1="192"  y1="452" x2="192"  y2="488"
+            stroke="#D4705A" stroke-width="2" marker-end="url(#arr)"/>
+      <!-- drop to T2 -->
+      <line x1="416"  y1="452" x2="416"  y2="488"
+            stroke="#D4705A" stroke-width="2" marker-end="url(#arr)"/>
+      <!-- drop to T3 -->
+      <line x1="640"  y1="452" x2="640"  y2="488"
+            stroke="#D4705A" stroke-width="2" marker-end="url(#arr)"/>
+      <!-- drop to T4 -->
+      <line x1="864"  y1="452" x2="864"  y2="488"
+            stroke="#D4705A" stroke-width="2" marker-end="url(#arr)"/>
+      <!-- drop to T5 (amber) -->
+      <line x1="1088" y1="452" x2="1088" y2="488"
+            stroke="#b8883a" stroke-width="2" marker-end="url(#arrA)"/>
+
+      <!-- ═══════════════════════════════════════
+           ROW 5 — Tools  (y=488, h=62)
+           centers: 192  416  640  864  1088
+           each box 200px wide → starts at center-100
+      ═══════════════════════════════════════ -->
+      <!-- T1: Claude Code + VS Code -->
+      <rect x="92" y="488" width="200" height="62" rx="5"
+            fill="#242424" stroke="#D4705A" stroke-width="1.5"/>
+      <text x="192" y="512" text-anchor="middle" fill="#dddddd"
+            font-size="11" font-weight="bold">Claude Code</text>
+      <text x="192" y="531" text-anchor="middle" fill="#aaaaaa"
+            font-size="10">+ VS Code Essentials</text>
+
+      <!-- T2: Claude SEO -->
+      <rect x="316" y="488" width="200" height="62" rx="5"
+            fill="#242424" stroke="#D4705A" stroke-width="1.5"/>
+      <text x="416" y="512" text-anchor="middle" fill="#dddddd"
+            font-size="11" font-weight="bold">Claude SEO</text>
+      <text x="416" y="531" text-anchor="middle" fill="#aaaaaa"
+            font-size="10">12 sub-skills · 6 agents</text>
+
+      <!-- T3: Claude Blog -->
+      <rect x="540" y="488" width="200" height="62" rx="5"
+            fill="#242424" stroke="#D4705A" stroke-width="1.5"/>
+      <text x="640" y="512" text-anchor="middle" fill="#dddddd"
+            font-size="11" font-weight="bold">Claude Blog</text>
+      <text x="640" y="531" text-anchor="middle" fill="#aaaaaa"
+            font-size="10">12 sub-skills · 4 agents</text>
+
+      <!-- T4: Skill Forge -->
+      <rect x="764" y="488" width="200" height="62" rx="5"
+            fill="#242424" stroke="#D4705A" stroke-width="1.5"/>
+      <text x="864" y="512" text-anchor="middle" fill="#dddddd"
+            font-size="11" font-weight="bold">Skill Forge</text>
+      <text x="864" y="531" text-anchor="middle" fill="#aaaaaa"
+            font-size="10">8 modules · 8 agents</text>
+
+      <!-- T5: WP MCP Ultimate (amber) -->
+      <rect x="988" y="488" width="200" height="62" rx="5"
+            fill="#231d10" stroke="#b8883a" stroke-width="1.5"/>
+      <text x="1088" y="512" text-anchor="middle" fill="#c9963f"
+            font-size="11" font-weight="bold">WP MCP Ultimate</text>
+      <text x="1088" y="531" text-anchor="middle" fill="#7a5e25"
+            font-size="10">Manual ZIP install</text>
+
+      <!-- Tools → Outputs -->
+      <line x1="192"  y1="550" x2="192"  y2="582"
+            stroke="#4f9960" stroke-width="1.5" marker-end="url(#arrG)"/>
+      <line x1="416"  y1="550" x2="416"  y2="582"
+            stroke="#4f9960" stroke-width="1.5" marker-end="url(#arrG)"/>
+      <line x1="640"  y1="550" x2="640"  y2="582"
+            stroke="#4f9960" stroke-width="1.5" marker-end="url(#arrG)"/>
+      <line x1="864"  y1="550" x2="864"  y2="582"
+            stroke="#4f9960" stroke-width="1.5" marker-end="url(#arrG)"/>
+      <line x1="1088" y1="550" x2="1088" y2="582"
+            stroke="#b8883a" stroke-width="1.5" marker-end="url(#arrA)"/>
+
+      <!-- ═══════════════════════════════════════
+           ROW 6 — Outputs  (y=582, h=76)
+      ═══════════════════════════════════════ -->
+      <!-- O1 -->
+      <rect x="92" y="582" width="200" height="76" rx="5"
+            fill="#1e3325" stroke="#4f9960" stroke-width="1.5"/>
+      <text x="192" y="604" text-anchor="middle" fill="#7fbb88"
+            font-size="11" font-weight="bold">Claude Code CLI</text>
+      <text x="192" y="621" text-anchor="middle" fill="#5a9068"
+            font-size="10">npm install -g @anthropic-ai/</text>
+      <text x="192" y="638" text-anchor="middle" fill="#5a9068"
+            font-size="10">claude-code · 26 VS Code ext</text>
+
+      <!-- O2 -->
+      <rect x="316" y="582" width="200" height="76" rx="5"
+            fill="#1e3325" stroke="#4f9960" stroke-width="1.5"/>
+      <text x="416" y="607" text-anchor="middle" fill="#7fbb88"
+            font-size="14" font-weight="bold">/seo</text>
+      <text x="416" y="628" text-anchor="middle" fill="#5a9068"
+            font-size="10">audits · schema · sitemap</text>
+      <text x="416" y="645" text-anchor="middle" fill="#5a9068"
+            font-size="10">hreflang · GEO · page analysis</text>
+
+      <!-- O3 -->
+      <rect x="540" y="582" width="200" height="76" rx="5"
+            fill="#1e3325" stroke="#4f9960" stroke-width="1.5"/>
+      <text x="640" y="607" text-anchor="middle" fill="#7fbb88"
+            font-size="14" font-weight="bold">/blog</text>
+      <text x="640" y="628" text-anchor="middle" fill="#5a9068"
+            font-size="10">write · rewrite · analyze</text>
+      <text x="640" y="645" text-anchor="middle" fill="#5a9068"
+            font-size="10">brief · calendar · strategy</text>
+
+      <!-- O4 -->
+      <rect x="764" y="582" width="200" height="76" rx="5"
+            fill="#1e3325" stroke="#4f9960" stroke-width="1.5"/>
+      <text x="864" y="607" text-anchor="middle" fill="#7fbb88"
+            font-size="12" font-weight="bold">/skill-forge</text>
+      <text x="864" y="628" text-anchor="middle" fill="#5a9068"
+            font-size="10">plan · build · review · evolve</text>
+      <text x="864" y="645" text-anchor="middle" fill="#5a9068"
+            font-size="10">publish · convert</text>
+
+      <!-- O5 (amber) -->
+      <rect x="988" y="582" width="200" height="76" rx="5"
+            fill="#231d10" stroke="#b8883a" stroke-width="1.5"/>
+      <text x="1088" y="604" text-anchor="middle" fill="#c9963f"
+            font-size="11" font-weight="bold">WP Admin → Plugins</text>
+      <text x="1088" y="622" text-anchor="middle" fill="#7a5e25"
+            font-size="10">Upload Plugin → Activate</text>
+      <text x="1088" y="640" text-anchor="middle" fill="#7a5e25"
+            font-size="10">57 WordPress abilities</text>
+    </svg>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       CHART 2 — Skills Command Map
-  ═══════════════════════════════════════════════════════ -->
-  <div class="chart-section-break" style="margin-top: 72px;">
-    <p class="section-label">slash command map</p>
+</div><!-- end PAGE 1 -->
 
-    <div class="chart-wrap">
-      <div class="mermaid">
-%%{init:{
-  "theme":"base",
-  "themeVariables":{
-    "background":"#181818",
-    "primaryColor":"#252525",
-    "primaryTextColor":"#e4e4e4",
-    "primaryBorderColor":"#D4705A",
-    "secondaryColor":"#1e3325",
-    "secondaryTextColor":"#7fbb88",
-    "secondaryBorderColor":"#3a6640",
-    "tertiaryColor":"#231d10",
-    "tertiaryTextColor":"#c9963f",
-    "tertiaryBorderColor":"#b8883a",
-    "lineColor":"#555555",
-    "edgeLabelBackground":"#181818",
-    "clusterBkg":"#161616",
-    "clusterBorder":"#2e2e2e",
-    "titleColor":"#D4705A",
-    "fontFamily":"Share Tech Mono, monospace",
-    "fontSize":"14px"
-  },
-  "flowchart":{
-    "nodeSpacing":60,
-    "rankSpacing":110,
-    "padding":24,
-    "curve":"basis",
-    "useMaxWidth":false
-  }
-}}%%
-flowchart LR
 
-  classDef skill   fill:#242424,stroke:#D4705A,color:#D4705A,stroke-width:2px,font-size:16px,font-weight:bold
-  classDef subcmd  fill:#1e1e1e,stroke:#555555,color:#cccccc,font-size:13px
-  classDef result  fill:#1e3325,stroke:#4f9960,color:#7fbb88,font-size:13px
-  classDef manual  fill:#231d10,stroke:#b8883a,color:#c9963f,font-size:13px
+<!-- ═══════════════════════════════════════════════
+     PAGE 2 — Slash Command Map
+════════════════════════════════════════════════ -->
+<div class="pdf-page" style="padding-top: 60px;">
 
-  %% ── /seo ─────────────────────────────────────────────────────────────
-  SEO["/seo"]:::skill
+  <p class="section-label">slash command map</p>
 
-  SEO --> SEO1["audit\nFull site crawl · 500 pages · health score"]:::subcmd
-  SEO --> SEO2["page\nDeep on-page analysis · meta · schema"]:::subcmd
-  SEO --> SEO3["schema\nDetect · validate · generate JSON-LD"]:::subcmd
-  SEO --> SEO4["sitemap\nValidate or generate XML sitemap"]:::subcmd
-  SEO --> SEO5["geo\nAI Overview · Perplexity · ChatGPT search"]:::subcmd
-  SEO --> SEO6["competitor-pages\nvs · alternatives · feature matrix"]:::subcmd
-  SEO --> SEO7["hreflang\nInternational SEO · language/region codes"]:::subcmd
-  SEO --> SEO8["plan\nIndustry strategy · roadmap · content plan"]:::subcmd
+  <div class="cmd-map">
 
-  SEO1 --> R_SEO["Health score 0–100\nAudit report PDF"]:::result
-
-  %% ── /blog ────────────────────────────────────────────────────────────
-  BLOG["/blog"]:::skill
-
-  BLOG --> BL1["write\nNew article · sourced stats · E-E-A-T"]:::subcmd
-  BLOG --> BL2["rewrite\nOptimize existing post · replace fake stats"]:::subcmd
-  BLOG --> BL3["analyze\nScore 0–100 · 6 quality dimensions"]:::subcmd
-  BLOG --> BL4["brief\nKeywords · outline · image suggestions"]:::subcmd
-  BLOG --> BL5["calendar\nEditorial calendar · topic clusters"]:::subcmd
-  BLOG --> BL6["strategy\nContent pillars · audience map · distribution"]:::subcmd
-
-  BL1 --> R_BLOG["Answer-first format\nGoogle + AI citation ready"]:::result
-
-  %% ── /skill-forge ─────────────────────────────────────────────────────
-  FORGE["/skill-forge"]:::skill
-
-  FORGE --> SF1["plan\nArchitecture · complexity tier · sub-skills"]:::subcmd
-  FORGE --> SF2["build\nScaffold SKILL.md · agents · templates"]:::subcmd
-  FORGE --> SF3["review\nHealth score · quality audit · issues"]:::subcmd
-  FORGE --> SF4["evolve\nIterate on feedback · fix triggering"]:::subcmd
-  FORGE --> SF5["publish\nGitHub · .skill package · install script"]:::subcmd
-  FORGE --> SF6["convert\nAdapt to Codex · Gemini CLI · Cursor"]:::subcmd
-
-  SF1 --> R_FORGE["Production-grade SKILL.md\nReady to share"]:::result
-
-  %% ── WP MCP Ultimate ──────────────────────────────────────────────────
-  WP["WP MCP\nUltimate"]:::manual
-
-  WP --> WP1["Content\nCreate · edit · publish · schedule posts"]:::subcmd
-  WP --> WP2["Media\nUpload · manage media library"]:::subcmd
-  WP --> WP3["Users\nManage accounts · roles · permissions"]:::subcmd
-  WP --> WP4["Plugins\nList · activate · deactivate"]:::subcmd
-  WP --> WP5["Site Settings\nMenus · widgets · theme options"]:::subcmd
-
-  WP1 --> R_WP["57 WordPress abilities\nvia MCP server connection"]:::manual
+    <!-- /seo -->
+    <div class="cmd-col">
+      <div class="cmd-col-header">/seo
+        <span>SEO suite — 12 sub-skills · 6 agents</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">audit</span>
+        <span class="cmd-desc">Full site crawl · health score 0–100 · up to 500 pages</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">page</span>
+        <span class="cmd-desc">Deep on-page analysis · meta tags · schema · performance</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">schema</span>
+        <span class="cmd-desc">Detect · validate · generate JSON-LD structured data</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">sitemap</span>
+        <span class="cmd-desc">Validate existing or generate new XML sitemap</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">geo</span>
+        <span class="cmd-desc">AI Overview · Perplexity · ChatGPT search optimization</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">competitor</span>
+        <span class="cmd-desc">vs pages · alternatives · feature comparison matrix</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">hreflang</span>
+        <span class="cmd-desc">International SEO · language / region code validation</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">plan</span>
+        <span class="cmd-desc">Industry-specific SEO strategy · content roadmap</span>
       </div>
     </div>
-  </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       Tool Reference Cards
-  ═══════════════════════════════════════════════════════ -->
-  <div class="chart-section-break" style="margin-top: 72px;">
-    <p class="section-label">tools included</p>
-    <div class="cards-grid">
-
-      <div class="card auto">
-        <div class="card-num">01 / AUTO-INSTALLED</div>
-        <div class="card-name">Claude Code + VS Code Essentials</div>
-        <div class="card-repo">github: claude-code-essentials-vs-code</div>
-        <div class="card-desc">Sets up the full dev environment: Claude Code CLI (npm global) and 26 curated VS Code extensions for AI-assisted development.</div>
-        <span class="badge green">claude CLI</span>
-        <span class="badge green">VS Code ×26</span>
+    <!-- /blog -->
+    <div class="cmd-col">
+      <div class="cmd-col-header">/blog
+        <span>Blog suite — 12 sub-skills · 4 agents</span>
       </div>
-
-      <div class="card auto">
-        <div class="card-num">02 / AUTO-INSTALLED</div>
-        <div class="card-name">Claude SEO</div>
-        <div class="card-repo">github: claude-seo → ~/.claude/skills/seo/</div>
-        <div class="card-desc">Full SEO suite — 12 sub-skills and 6 subagents. Site audits, page analysis, schema, sitemap, GEO/AEO, hreflang, competitor pages, and visual SEO.</div>
-        <span class="badge coral">/seo</span>
-        <span class="badge coral">12 sub-skills</span>
+      <div class="cmd-item">
+        <span class="cmd-key">write</span>
+        <span class="cmd-desc">New article · sourced stats · E-E-A-T formatting</span>
       </div>
-
-      <div class="card auto">
-        <div class="card-num">03 / AUTO-INSTALLED</div>
-        <div class="card-name">Claude Blog</div>
-        <div class="card-repo">github: claude-blog → ~/.claude/skills/blog/</div>
-        <div class="card-desc">AI blog creation and optimization — 12 sub-skills, 4 agents. Writes, rewrites, analyzes, and schedules content for Google rankings and AI citation platforms.</div>
-        <span class="badge coral">/blog</span>
-        <span class="badge coral">12 sub-skills</span>
+      <div class="cmd-item">
+        <span class="cmd-key">rewrite</span>
+        <span class="cmd-desc">Optimize existing post · replace fabricated statistics</span>
       </div>
-
-      <div class="card auto">
-        <div class="card-num">04 / AUTO-INSTALLED</div>
-        <div class="card-name">Skill Forge</div>
-        <div class="card-repo">github: skill-forge → ~/.claude/skills/skill-forge/</div>
-        <div class="card-desc">Meta-skill for building Claude Code skills — 8 modules, 8 agents. Plan → Build → Review → Evolve → Publish → Convert → Eval → Benchmark.</div>
-        <span class="badge coral">/skill-forge</span>
-        <span class="badge coral">8 modules</span>
+      <div class="cmd-item">
+        <span class="cmd-key">analyze</span>
+        <span class="cmd-desc">Score 0–100 · 6 quality dimensions audit</span>
       </div>
-
-      <div class="card manual">
-        <div class="card-num">05 / MANUAL INSTALL (ZIP downloaded automatically)</div>
-        <div class="card-name">WP MCP Ultimate</div>
-        <div class="card-repo">github: wp-mcp-ultimate → ~/Downloads/</div>
-        <div class="card-desc">WordPress plugin connecting Claude to any WP site via MCP. 57 abilities across content, media, users, plugins, menus, widgets, and comments. Cloudways ready.</div>
-        <span class="badge amber">Upload via WP Admin</span>
-        <span class="badge amber">57 WP abilities</span>
+      <div class="cmd-item">
+        <span class="cmd-key">brief</span>
+        <span class="cmd-desc">Target keywords · content outline · image suggestions</span>
       </div>
-
+      <div class="cmd-item">
+        <span class="cmd-key">calendar</span>
+        <span class="cmd-desc">Editorial calendar · topic clusters · publishing schedule</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">strategy</span>
+        <span class="cmd-desc">Content pillars · audience map · distribution channels</span>
+      </div>
     </div>
+
+    <!-- /skill-forge -->
+    <div class="cmd-col">
+      <div class="cmd-col-header">/skill-forge
+        <span>Skill builder — 8 modules · 8 agents</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">plan</span>
+        <span class="cmd-desc">Architecture · complexity tier · sub-skill decomposition</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">build</span>
+        <span class="cmd-desc">Scaffold SKILL.md · agents · templates · sub-skills</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">review</span>
+        <span class="cmd-desc">Health score 0–100 · quality audit · issue priorities</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">evolve</span>
+        <span class="cmd-desc">Iterate on feedback · fix over/under-triggering</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">publish</span>
+        <span class="cmd-desc">GitHub packaging · .skill bundle · install script</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">convert</span>
+        <span class="cmd-desc">Adapt to Codex · Gemini CLI · Cursor · Antigravity</span>
+      </div>
+    </div>
+
+    <!-- WP MCP Ultimate -->
+    <div class="cmd-col manual">
+      <div class="cmd-col-header">WP MCP Ultimate
+        <span>57 WordPress abilities via MCP server</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">Content</span>
+        <span class="cmd-desc">Create · edit · publish · schedule posts &amp; pages</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">Media</span>
+        <span class="cmd-desc">Upload and manage the WordPress media library</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">Users</span>
+        <span class="cmd-desc">Manage accounts · roles · permissions</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">Plugins</span>
+        <span class="cmd-desc">List · activate · deactivate installed plugins</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">Settings</span>
+        <span class="cmd-desc">Menus · widgets · theme options · site config</span>
+      </div>
+      <div class="cmd-item">
+        <span class="cmd-key">Install</span>
+        <span class="cmd-desc">WP Admin → Plugins → Add New → Upload Plugin</span>
+      </div>
+    </div>
+
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       Info Boxes
-  ═══════════════════════════════════════════════════════ -->
-  <div style="margin-top: 64px;" class="chart-section-break">
+</div><!-- end PAGE 2 -->
+
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 3 — Tool Cards + How It Works
+════════════════════════════════════════════════ -->
+<div class="pdf-page" style="padding-top: 60px;">
+
+  <p class="section-label">tools included</p>
+
+  <div class="cards-grid">
+
+    <div class="card auto">
+      <div class="card-num">01 / AUTO-INSTALLED</div>
+      <div class="card-name">Claude Code + VS Code Essentials</div>
+      <div class="card-repo">github: claude-code-essentials-vs-code</div>
+      <div class="card-desc">Sets up the complete dev environment: Claude Code CLI installed globally via npm, and 26 curated VS Code extensions for AI-assisted development.</div>
+      <span class="badge green">claude CLI</span>
+      <span class="badge green">VS Code ×26</span>
+    </div>
+
+    <div class="card auto">
+      <div class="card-num">02 / AUTO-INSTALLED</div>
+      <div class="card-name">Claude SEO</div>
+      <div class="card-repo">claude-seo → ~/.claude/skills/seo/</div>
+      <div class="card-desc">Full SEO suite with 12 sub-skills and 6 subagents. Site audits, page analysis, schema, sitemap generation, GEO/AEO, hreflang, and competitor pages.</div>
+      <span class="badge coral">/seo</span>
+      <span class="badge coral">12 sub-skills</span>
+    </div>
+
+    <div class="card auto">
+      <div class="card-num">03 / AUTO-INSTALLED</div>
+      <div class="card-name">Claude Blog</div>
+      <div class="card-repo">claude-blog → ~/.claude/skills/blog/</div>
+      <div class="card-desc">AI blog creation and optimization with 12 sub-skills and 4 agents. Writes, rewrites, analyzes, and schedules content for Google rankings and AI citations.</div>
+      <span class="badge coral">/blog</span>
+      <span class="badge coral">12 sub-skills</span>
+    </div>
+
+    <div class="card auto">
+      <div class="card-num">04 / AUTO-INSTALLED</div>
+      <div class="card-name">Skill Forge</div>
+      <div class="card-repo">skill-forge → ~/.claude/skills/skill-forge/</div>
+      <div class="card-desc">Meta-skill for building Claude Code skills — 8 modules, 8 agents. Plan → Build → Review → Evolve → Publish → Convert, with quality scoring.</div>
+      <span class="badge coral">/skill-forge</span>
+      <span class="badge coral">8 modules</span>
+    </div>
+
+    <div class="card manual">
+      <div class="card-num">05 / MANUAL INSTALL (ZIP auto-downloaded)</div>
+      <div class="card-name">WP MCP Ultimate</div>
+      <div class="card-repo">wp-mcp-ultimate → ~/Downloads/</div>
+      <div class="card-desc">WordPress plugin connecting Claude to any WP site via MCP server. 57 abilities across content, media, users, plugins, and settings. Cloudways compatible.</div>
+      <span class="badge amber">WP Admin upload</span>
+      <span class="badge amber">57 WP abilities</span>
+    </div>
+
+  </div>
+
+  <div style="margin-top: 36px;">
     <p class="section-label">how it works</p>
     <div class="info-grid">
 
       <div class="info-box">
         <h3>Fresh Install</h3>
-        <p>
-          Each skill repo is cloned to <code>~/.claude/packs/&lt;name&gt;/</code>
-          then its <code>install.sh</code> copies files into
-          <code>~/.claude/skills/</code>. Restart Claude Code to load all skills.
-        </p>
+        <p>Each skill repo is cloned to <code>~/.claude/packs/&lt;name&gt;/</code> then its <code>install.sh</code> copies files into <code>~/.claude/skills/</code>. Restart Claude Code to activate all skills.</p>
       </div>
 
       <div class="info-box">
         <h3>Re-run = Update</h3>
-        <p>
-          Script detects existing clones in <code>~/.claude/packs/</code>
-          and runs <code>git pull</code> on each. Then re-runs
-          <code>install.sh</code> to apply the latest version. Same one-liner every time.
-        </p>
+        <p>Detects existing clones in <code>~/.claude/packs/</code> and runs <code>git pull</code> on each. Then re-runs each <code>install.sh</code> to apply the latest version. Same one-liner every time.</p>
       </div>
 
       <div class="info-box">
         <h3>Error Handling</h3>
-        <p>
-          Each of the 5 tools installs independently. If one step fails it
-          prints the error and continues — the rest of the pack still installs.
-          No silent failures.
-        </p>
+        <p>Each of the 5 tools installs independently. If one step fails it prints the error and continues — the rest of the pack still installs. No silent failures, no aborts.</p>
       </div>
 
       <div class="info-box">
         <h3>WP Plugin Step</h3>
-        <p>
-          ZIP is downloaded to <code>~/Downloads/wp-mcp-ultimate.zip</code>
-          automatically. Then: WP Admin → Plugins → Add New → Upload Plugin.
-          Cloudways users upload via the Cloudways WordPress panel.
-        </p>
+        <p>ZIP is downloaded to <code>~/Downloads/wp-mcp-ultimate.zip</code> automatically. Then: WP Admin → Plugins → Add New → Upload Plugin. Cloudways users upload via their panel.</p>
       </div>
 
     </div>
@@ -637,14 +770,7 @@ flowchart LR
     github.com/AgriciDaniel/marketing-skill-pack
   </footer>
 
-</div>
+</div><!-- end PAGE 3 -->
 
-<script>
-  mermaid.initialize({
-    startOnLoad: true,
-    securityLevel: 'loose',
-    theme: 'base'
-  });
-</script>
 </body>
 </html>
