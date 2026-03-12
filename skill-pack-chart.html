@@ -214,9 +214,98 @@
       text-align: center;
       letter-spacing: 3px;
     }
+
+    /* ── Save as PDF button ──────────────────────────────── */
+    .pdf-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: var(--coral);
+      color: #111111;
+      border: none;
+      padding: 11px 22px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      cursor: pointer;
+      border-radius: 4px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 16px rgba(212,112,90,0.35);
+      transition: background 0.15s;
+    }
+    .pdf-btn:hover { background: #e07d65; }
+
+    /* ── PDF / Print ─────────────────────────────────────── */
+    @page {
+      size: A3 landscape;
+      margin: 14mm 16mm;
+    }
+
+    @media print {
+      /* Hide the button in the PDF */
+      .pdf-btn { display: none !important; }
+
+      /* Preserve dark theme colours */
+      html, body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: #111111;
+      }
+
+      .page {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      /* Never split a chart across pages */
+      .chart-wrap {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        overflow: visible;
+      }
+
+      /* Keep section headers with their content */
+      .section-label { break-after: avoid; page-break-after: avoid; }
+
+      /* Keep legend attached to chart */
+      .legend { break-after: avoid; page-break-after: avoid; }
+
+      /* New page before each major section (charts + cards + info) */
+      .chart-section-break {
+        break-before: page;
+        page-break-before: always;
+      }
+
+      /* Keep individual cards intact */
+      .card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Keep info boxes intact */
+      .info-box {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Keep the card grid together */
+      .cards-grid {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Keep info grid together */
+      .info-grid {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
   </style>
 </head>
 <body>
+<button class="pdf-btn" onclick="window.print()">&#8595; Save as PDF</button>
 <div class="page">
 
   <!-- ── Hero ──────────────────────────────────────────── -->
@@ -349,7 +438,7 @@ flowchart TB
   <!-- ══════════════════════════════════════════════════════
        CHART 2 — Skills Command Map
   ═══════════════════════════════════════════════════════ -->
-  <div style="margin-top: 72px;">
+  <div class="chart-section-break" style="margin-top: 72px;">
     <p class="section-label">slash command map</p>
 
     <div class="chart-wrap">
@@ -445,7 +534,7 @@ flowchart LR
   <!-- ══════════════════════════════════════════════════════
        Tool Reference Cards
   ═══════════════════════════════════════════════════════ -->
-  <div style="margin-top: 72px;">
+  <div class="chart-section-break" style="margin-top: 72px;">
     <p class="section-label">tools included</p>
     <div class="cards-grid">
 
@@ -500,7 +589,7 @@ flowchart LR
   <!-- ══════════════════════════════════════════════════════
        Info Boxes
   ═══════════════════════════════════════════════════════ -->
-  <div style="margin-top: 64px;">
+  <div style="margin-top: 64px;" class="chart-section-break">
     <p class="section-label">how it works</p>
     <div class="info-grid">
 
