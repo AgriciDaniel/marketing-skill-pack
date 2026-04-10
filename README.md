@@ -93,3 +93,14 @@ Errors in individual steps are reported but do not abort the rest of the install
 The PowerShell script (`install.ps1`) automatically finds Git Bash in common installation paths. If Git Bash is not found, it detects WSL bash as a fallback. If neither is available, it prints step-by-step instructions.
 
 Git Bash comes bundled with [Git for Windows](https://git-scm.com/download/win) — most developers already have it.
+
+---
+
+## Author
+
+Built by [Agrici Daniel](https://agricidaniel.com/about) - AI Workflow Architect.
+
+- [Blog](https://agricidaniel.com/blog) - Deep dives on AI marketing automation
+- [AI Marketing Hub](https://www.skool.com/ai-marketing-hub) - Free community, 2,800+ members
+- [YouTube](https://www.youtube.com/@AgriciDaniel) - Tutorials and demos
+- [All open-source tools](https://github.com/AgriciDaniel)
